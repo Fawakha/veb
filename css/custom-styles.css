@@ -131,3 +131,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* [FEATURE] Smooth transitions for multimedia aspect-video container */
+.aspect-video iframe {
+  transition: opacity 0.3s ease-in-out;
+}
