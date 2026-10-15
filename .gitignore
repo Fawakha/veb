@@ -1,0 +1,26 @@
+# Dependency and OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories and files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Build and local cache
+node_modules/
+dist/
+.temp/
+*.log
+
+# Environment variables and secrets
+.env
+.env.local
+*.bak
