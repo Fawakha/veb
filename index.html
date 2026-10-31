@@ -1,974 +1,900 @@
 <!DOCTYPE html>
-<html lang="uk" class="scroll-smooth dark">
+<html lang="uk" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PEACH — Повноцінний ігровий лендинг: кліпи, LFG, медіа та кібер-хаби</title>
-  <meta name="description" content="PEACH — єдиний простір для ігрових спільнот нового покоління: LFG тімейти, 4K кліпи, статус серверів та кіберспортивні хаби. Лабораторна робота №7.">
+  <title>PEACH — Спільнота геймерів: кліпи, LFG, медіа та кібер-хаби</title>
+  <meta name="description" content="PEACH — єдиний простір для ігрових спільнот, кліпів та пошуку тімейтів у реальному часі без токсичності. Лабораторна робота №7.">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-  <!-- Tailwind CSS CDN (v3.4 JIT) -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind Theme Configuration -->
+  <!-- Tailwind Configuration: Фірмова дизайн-система PEACH з Лабораторної роботи №6 -->
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
             peach: {
-              400: '#fbbf24',
-              500: '#f4c542',
-              600: '#d97706'
+              DEFAULT: '#f4c542',
+              hover: '#e5b634',
+              light: '#fdf3d1'
             },
-            violetaccent: {
-              400: '#9d7ef2',
-              500: '#7b5cd6',
-              600: '#6845cb'
+            accent: {
+              DEFAULT: '#7b5cd6',
+              hover: '#6848c2',
+              light: '#f0ecfc'
             },
-            darkbg: '#0f0e17',
-            surface: '#181622',
-            surfacecard: '#1f1c2d',
-            surfaceborder: '#2c2842'
+            dark: '#1d1d1f',
+            pageBg: '#f7f6f3',
+            cardBg: '#ffffff',
+            cardMuted: '#eeeeee',
+            textMain: '#222222',
+            textMuted: '#555555',
+            borderSubtle: '#dddddd',
+            borderField: '#767676',
+            placeholderColor: '#595959'
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
             heading: ['Raleway', 'sans-serif']
+          },
+          borderRadius: {
+            'card': '10px'
           }
         }
       }
     };
   </script>
 
-  <!-- Кастомні стилі: шрифти, glow, темний скролбар -->
+  <!-- Користувацькі специфічні стилі (шрифти, кастомний скролбар, skip-link) -->
   <link rel="stylesheet" href="css/custom-styles.css">
 </head>
-<body id="top" class="bg-darkbg text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-peach-500 selection:text-darkbg">
+<body id="top" class="bg-pageBg text-textMain font-sans antialiased min-h-screen flex flex-col">
 
-  <!-- Доступність: швидкий перехід до контенту -->
+  <!-- Доступність: швидкий перехід до основного контенту (Skip Link) -->
   <a class="skip-link" href="#main">Перейти до основного вмісту</a>
 
   <!-- ======================================================================
-       1. HEADER / НАВІГАЦІЯ (Sticky Navbar + Desktop & Mobile Menu)
+       HEADER / ШАПКА САЙТУ (Адаптивна панель навігації)
        ====================================================================== -->
-  <header class="sticky top-0 z-50 bg-darkbg/90 backdrop-blur-md border-b border-surfaceborder/70 transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20 gap-4">
+  <header class="sticky top-0 z-40 bg-cardBg border-b border-borderSubtle transition-all">
+    <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+      <div class="flex items-center justify-between h-16 gap-3 md:gap-5">
 
-        <!-- Логотип бренду -->
-        <a href="#top" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-peach-500 rounded-lg p-1" aria-label="Головна сторінка PEACH">
-          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-peach-500 to-violetaccent-500 p-0.5 shadow-lg shadow-peach-500/20 group-hover:scale-105 transition-transform">
-            <div class="w-full h-full bg-darkbg rounded-[10px] flex items-center justify-center">
-              <i class="fa-solid fa-gamepad text-peach-500 text-xl group-hover:rotate-12 transition-transform"></i>
-            </div>
-          </div>
-          <div class="flex flex-col">
-            <span class="font-heading font-extrabold text-2xl tracking-wider text-slate-100 group-hover:text-peach-400 transition-colors">
-              PEACH<span class="text-peach-500">.</span>GG
-            </span>
-            <span class="text-[10px] font-semibold uppercase tracking-widest text-slate-400 -mt-1">Gaming Ecosystem</span>
-          </div>
+        <!-- Логотип проєкту PEACH -->
+        <a class="flex items-center gap-2 font-heading font-bold text-xl text-dark hover:opacity-90 shrink-0" href="index.html" aria-label="PEACH — головна сторінка">
+          <img src="assets/icons/logo.svg" alt="" width="28" height="28" class="w-7 h-7">
+          <span>PEACH</span>
         </a>
 
         <!-- Десктопна навігація -->
-        <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300" aria-label="Головне меню">
-          <a href="#features" class="hover:text-peach-400 focus:text-peach-400 transition-colors focus:outline-none focus:ring-1 focus:ring-peach-500 rounded px-1">Переваги</a>
-          <a href="#lfg" class="hover:text-peach-400 focus:text-peach-400 transition-colors focus:outline-none focus:ring-1 focus:ring-peach-500 rounded px-1">Тімейти (LFG)</a>
-          <a href="#media" class="hover:text-peach-400 focus:text-peach-400 transition-colors focus:outline-none focus:ring-1 focus:ring-peach-500 rounded px-1">Медіа & Хаб</a>
-          <a href="#servers" class="hover:text-peach-400 focus:text-peach-400 transition-colors focus:outline-none focus:ring-1 focus:ring-peach-500 rounded px-1">Статус серверів</a>
-          <a href="#reviews" class="hover:text-peach-400 focus:text-peach-400 transition-colors focus:outline-none focus:ring-1 focus:ring-peach-500 rounded px-1">Відгуки</a>
-          <a href="#faq" class="hover:text-peach-400 focus:text-peach-400 transition-colors focus:outline-none focus:ring-1 focus:ring-peach-500 rounded px-1">FAQ</a>
+        <nav class="hidden md:flex items-center gap-1 lg:gap-3 shrink-0" aria-label="Головна навігація">
+          <a class="py-1.5 px-2 text-sm font-medium border-b-2 border-peach text-dark" href="#hero" aria-current="page">Головна</a>
+          <a class="py-1.5 px-2 text-sm font-medium border-b-2 border-transparent text-textMuted hover:text-dark hover:border-peach transition-colors" href="#party-finder">Пошук команди (LFG)</a>
+          <a class="py-1.5 px-2 text-sm font-medium border-b-2 border-transparent text-textMuted hover:text-dark hover:border-peach transition-colors" href="#benefits">Переваги</a>
+          <a class="py-1.5 px-2 text-sm font-medium border-b-2 border-transparent text-textMuted hover:text-dark hover:border-peach transition-colors" href="#services">Сервіси</a>
+          <a class="py-1.5 px-2 text-sm font-medium border-b-2 border-transparent text-textMuted hover:text-dark hover:border-peach transition-colors" href="#multimedia">Медіа & Хаб</a>
+          <a class="py-1.5 px-2 text-sm font-medium border-b-2 border-transparent text-textMuted hover:text-dark hover:border-peach transition-colors" href="#servers">Сервери</a>
+          <a class="py-1.5 px-2 text-sm font-medium border-b-2 border-transparent text-textMuted hover:text-dark hover:border-peach transition-colors" href="#faq">FAQ</a>
         </nav>
 
-        <!-- Дії в шапці (Десктоп) -->
-        <div class="hidden sm:flex items-center gap-4">
-          <a href="#contact" class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 rounded-xl font-heading font-bold text-sm tracking-wide bg-gradient-to-r from-peach-500 to-peach-400 text-darkbg shadow-lg shadow-peach-500/25 hover:shadow-peach-500/40 hover:-translate-y-0.5 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-peach-400 focus:ring-offset-2 focus:ring-offset-darkbg">
-            <i class="fa-solid fa-bolt mr-2"></i> Ранній доступ
-          </a>
-        </div>
-
-        <!-- Кнопка гамбургер мобільного меню -->
-        <div class="flex lg:hidden">
-          <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2.5 rounded-xl text-slate-300 hover:text-peach-400 hover:bg-surface border border-surfaceborder focus:outline-none focus:ring-2 focus:ring-peach-500" aria-controls="mobile-menu" aria-expanded="false" aria-label="Відкрити головне меню">
-            <i id="menu-icon-open" class="fa-solid fa-bars text-xl"></i>
-            <i id="menu-icon-close" class="fa-solid fa-xmark text-xl hidden"></i>
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Мобільне меню (випадаюче) -->
-    <div id="mobile-menu" class="hidden lg:hidden border-b border-surfaceborder bg-surface/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-3">
-      <nav class="flex flex-col space-y-2 text-base font-medium text-slate-300">
-        <a href="#features" class="mobile-link px-3 py-2 rounded-lg hover:bg-surfacecard hover:text-peach-400 transition-colors">Переваги</a>
-        <a href="#lfg" class="mobile-link px-3 py-2 rounded-lg hover:bg-surfacecard hover:text-peach-400 transition-colors">Тімейти (LFG)</a>
-        <a href="#media" class="mobile-link px-3 py-2 rounded-lg hover:bg-surfacecard hover:text-peach-400 transition-colors">Медіа & Хаб</a>
-        <a href="#servers" class="mobile-link px-3 py-2 rounded-lg hover:bg-surfacecard hover:text-peach-400 transition-colors">Статус серверів</a>
-        <a href="#reviews" class="mobile-link px-3 py-2 rounded-lg hover:bg-surfacecard hover:text-peach-400 transition-colors">Відгуки</a>
-        <a href="#faq" class="mobile-link px-3 py-2 rounded-lg hover:bg-surfacecard hover:text-peach-400 transition-colors">FAQ</a>
-        <a href="#contact" class="mobile-link px-3 py-2.5 rounded-lg bg-peach-500 text-darkbg font-bold text-center mt-2">Приєднатися до клубу</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ГОЛОВНИЙ КОНТЕНТ ЛЕНДИНГУ -->
-  <main id="main" class="flex-grow">
-
-    <!-- ======================================================================
-         2. HERO SECTION (Перший екран з УТП, CTA та бейджами)
-         ====================================================================== -->
-    <section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32">
-      <!-- Фонове декоративне підсвічування -->
-      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-violetaccent-600/20 via-peach-500/15 to-transparent blur-[120px] pointer-events-none -z-10"></div>
-      
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          <!-- Ліва колонка: Заголовок, опис, кнопки CTA -->
-          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-surfaceborder text-xs font-semibold text-peach-400">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>Сезон 2026: Нова система ШІ-метчмейкінгу</span>
-            </div>
-
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight leading-[1.1] text-slate-100">
-              Єдиний ігровий простір <br>
-              <span class="text-gradient-peach">нових перемог та LFG</span>
-            </h1>
-
-            <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-              PEACH об'єднує геймерів без токсичності: знаходь ідеальний сквад за 30 секунд за допомогою ШІ-підбору, дивись найкращі кліпи спільноти у 4K та грай на виділених серверах з мінімальним пінгом.
-            </p>
-
-            <!-- Блок CTA кнопок -->
-            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <a href="#lfg" class="w-full sm:w-auto inline-flex items-center justify-center min-h-[52px] px-8 py-3.5 rounded-xl font-heading font-bold text-base bg-gradient-to-r from-peach-500 to-peach-400 text-darkbg shadow-xl shadow-peach-500/25 hover:shadow-peach-500/40 hover:-translate-y-0.5 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-peach-400">
-                <i class="fa-solid fa-users mr-2.5"></i> Знайти тімейтів
-              </a>
-              <a href="#media" class="w-full sm:w-auto inline-flex items-center justify-center min-h-[52px] px-7 py-3.5 rounded-xl font-heading font-bold text-base bg-surfacecard hover:bg-surface border border-surfaceborder text-slate-200 hover:text-peach-400 hover:border-peach-500/40 transition-all focus:outline-none focus:ring-2 focus:ring-peach-500">
-                <i class="fa-solid fa-play mr-2.5 text-peach-500"></i> Дивитися промо
-              </a>
-            </div>
-
-            <!-- Довіра та статистика -->
-            <div class="pt-8 border-t border-surfaceborder/60 grid grid-cols-3 gap-4 text-center lg:text-left">
-              <div>
-                <p class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-100">24.5K+</p>
-                <p class="text-xs text-slate-400 font-medium">Активних гравців</p>
-              </div>
-              <div>
-                <p class="text-2xl sm:text-3xl font-heading font-extrabold text-peach-400">&lt; 30 с</p>
-                <p class="text-xs text-slate-400 font-medium">Пошук тімейтів</p>
-              </div>
-              <div>
-                <p class="text-2xl sm:text-3xl font-heading font-extrabold text-violetaccent-400">99.8%</p>
-                <p class="text-xs text-slate-400 font-medium">Без токсичності</p>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Права колонка: Інтерактивна карточка платформи / Прев'ю -->
-          <div class="lg:col-span-5 relative">
-            <div class="relative mx-auto max-w-md rounded-2xl bg-surfacecard border border-surfaceborder p-6 shadow-2xl shadow-violetaccent-950/40">
-              
-              <!-- Заголовок прев'ю -->
-              <div class="flex items-center justify-between pb-4 border-b border-surfaceborder">
-                <div class="flex items-center gap-3">
-                  <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Live Matchmaking Feed</span>
-                </div>
-                <span class="text-xs px-2.5 py-1 rounded bg-violetaccent-600/20 text-violetaccent-400 border border-violetaccent-500/30 font-semibold">CS2 & Apex</span>
-              </div>
-
-              <!-- Картки live-активності -->
-              <div class="py-4 space-y-3">
-                <div class="flex items-center justify-between p-3 rounded-xl bg-surface/70 border border-surfaceborder/60">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-peach-500/10 border border-peach-500/30 flex items-center justify-center text-peach-400 font-bold text-sm">
-                      NF
-                    </div>
-                    <div>
-                      <p class="text-sm font-bold text-slate-100">NovaFox <span class="text-xs text-slate-400 font-normal">(Premier 18.4k)</span></p>
-                      <p class="text-xs text-slate-400"><i class="fa-solid fa-gamepad text-peach-500 mr-1"></i> Counter-Strike 2 &bull; AWPer</p>
-                    </div>
-                  </div>
-                  <span class="text-xs font-semibold px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">В лобі 4/5</span>
-                </div>
-
-                <div class="flex items-center justify-between p-3 rounded-xl bg-surface/70 border border-surfaceborder/60">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-violetaccent-500/10 border border-violetaccent-500/30 flex items-center justify-center text-violetaccent-400 font-bold text-sm">
-                      AK
-                    </div>
-                    <div>
-                      <p class="text-sm font-bold text-slate-100">ApexKai <span class="text-xs text-slate-400 font-normal">(Master Tier)</span></p>
-                      <p class="text-xs text-slate-400"><i class="fa-solid fa-crosshairs text-violetaccent-400 mr-1"></i> Apex Legends &bull; Fragger</p>
-                    </div>
-                  </div>
-                  <span class="text-xs font-semibold px-2 py-1 rounded bg-peach-500/10 text-peach-400 border border-peach-500/20">Шукає +1</span>
-                </div>
-
-                <div class="flex items-center justify-between p-3 rounded-xl bg-surface/70 border border-surfaceborder/60">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold text-sm">
-                      LR
-                    </div>
-                    <div>
-                      <p class="text-sm font-bold text-slate-100">LunaRift <span class="text-xs text-slate-400 font-normal">(Immortal 2)</span></p>
-                      <p class="text-xs text-slate-400"><i class="fa-solid fa-shield-halved text-sky-400 mr-1"></i> Valorant &bull; Initiator</p>
-                    </div>
-                  </div>
-                  <span class="text-xs font-semibold px-2 py-1 rounded bg-violetaccent-500/10 text-violetaccent-300 border border-violetaccent-500/20">Готовий</span>
-                </div>
-              </div>
-
-              <!-- Нижня кнопка віджета -->
-              <a href="#lfg" class="block w-full py-2.5 text-center text-xs font-bold uppercase tracking-wider text-peach-400 hover:text-peach-300 bg-surface hover:bg-surfaceborder rounded-xl transition-colors border border-surfaceborder">
-                Переглянути всі 140+ відкритих лобі <i class="fa-solid fa-arrow-right ml-1"></i>
-              </a>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         3. FEATURES / ПЕРЕВАГИ (Сітка переваг платформи)
-         ====================================================================== -->
-    <section id="features" class="py-20 bg-surface/40 border-y border-surfaceborder/50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <p class="text-xs font-bold uppercase tracking-widest text-peach-400">Інженерія комфортного геймінгу</p>
-          <h2 class="text-3xl sm:text-4xl font-heading font-black text-slate-100">Чому ком'юніті обирає PEACH</h2>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Ми усунули головні проблеми сучасного матчмейкінгу: мовний бар'єр, неадекватну поведінку та високий пінг, створивши надійну платформу для щоденних ігор і турнірів.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-          <!-- Card 1 -->
-          <div class="p-6 rounded-2xl bg-surfacecard border border-surfaceborder hover:border-peach-500/40 hover:-translate-y-1.5 transition-all shadow-lg">
-            <div class="w-12 h-12 rounded-xl bg-peach-500/10 border border-peach-500/20 flex items-center justify-center text-peach-400 text-xl mb-5">
-              <i class="fa-solid fa-shield-halved"></i>
-            </div>
-            <h3 class="text-lg font-heading font-bold text-slate-100 mb-2">Zero-Toxicity Shield</h3>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              ШІ-модерація голосу й чату в реальному часі фільтрує токсичність і тролінг, зберігаючи твій комфорт і фокус на перемозі.
-            </p>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="p-6 rounded-2xl bg-surfacecard border border-surfaceborder hover:border-violetaccent-500/40 hover:-translate-y-1.5 transition-all shadow-lg">
-            <div class="w-12 h-12 rounded-xl bg-violetaccent-500/10 border border-violetaccent-500/20 flex items-center justify-center text-violetaccent-400 text-xl mb-5">
-              <i class="fa-solid fa-brain"></i>
-            </div>
-            <h3 class="text-lg font-heading font-bold text-slate-100 mb-2">ШІ-Метчмейкінг</h3>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Алгоритм підбирає напарників за стилем гри, ролями, K/D рейтингом та мікрофонною дисципліною, а не випадковим рандомом.
-            </p>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="p-6 rounded-2xl bg-surfacecard border border-surfaceborder hover:border-emerald-500/40 hover:-translate-y-1.5 transition-all shadow-lg">
-            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl mb-5">
-              <i class="fa-solid fa-server"></i>
-            </div>
-            <h3 class="text-lg font-heading font-bold text-slate-100 mb-2">Сервери &lt; 15 ms</h3>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Локальні вузли у Варшаві, Франкфурті та Києві забезпечують стабільний тікрейт 128 і кришталево чистий звуковий зв'язок.
-            </p>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="p-6 rounded-2xl bg-surfacecard border border-surfaceborder hover:border-amber-500/40 hover:-translate-y-1.5 transition-all shadow-lg">
-            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl mb-5">
-              <i class="fa-solid fa-film"></i>
-            </div>
-            <h3 class="text-lg font-heading font-bold text-slate-100 mb-2">4K Кліпи без втрат</h3>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Миттєвий аплоад ігрових моментів у 60FPS без стиснення якості, автотегування ейсів і синхронізація з профілем Steam.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         4. LFG / PARTY FINDER SECTION (Віджет пошуку гравців)
-         ====================================================================== -->
-    <section id="lfg" class="py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div class="space-y-2 max-w-xl">
-            <span class="text-xs font-bold uppercase tracking-widest text-violetaccent-400">Party Finder v2.4</span>
-            <h2 class="text-3xl sm:text-4xl font-heading font-black text-slate-100">Швидкий пошук тімейтів</h2>
-            <p class="text-sm text-slate-400">Обирай дисципліну, фільтруй за рівнем навичок та приєднуйся до готових лобі в один клік.</p>
-          </div>
-
-          <!-- Фільтри ігор -->
-          <div class="flex flex-wrap gap-2">
-            <button class="px-4 py-2 rounded-xl text-xs font-bold bg-peach-500 text-darkbg shadow-md shadow-peach-500/20">Всі ігри</button>
-            <button class="px-4 py-2 rounded-xl text-xs font-bold bg-surfacecard text-slate-300 hover:text-peach-400 border border-surfaceborder transition-colors">CS2</button>
-            <button class="px-4 py-2 rounded-xl text-xs font-bold bg-surfacecard text-slate-300 hover:text-peach-400 border border-surfaceborder transition-colors">Valorant</button>
-            <button class="px-4 py-2 rounded-xl text-xs font-bold bg-surfacecard text-slate-300 hover:text-peach-400 border border-surfaceborder transition-colors">Apex</button>
-            <button class="px-4 py-2 rounded-xl text-xs font-bold bg-surfacecard text-slate-300 hover:text-peach-400 border border-surfaceborder transition-colors">Dota 2</button>
-          </div>
-        </div>
-
-        <!-- Сітка відкритих лобі (LFG Cards) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          <!-- LFG Card 1 -->
-          <div class="bg-surfacecard border border-surfaceborder rounded-2xl p-6 hover:border-peach-500/40 transition-all flex flex-col justify-between">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-xl bg-peach-500/20 text-peach-400 flex items-center justify-center font-bold text-lg border border-peach-500/30">
-                    NF
-                  </div>
-                  <div>
-                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
-                      NovaFox 
-                      <span class="w-2 h-2 rounded-full bg-emerald-400" title="В мережі"></span>
-                    </h3>
-                    <p class="text-xs text-slate-400">Лідер лобі &bull; Україна</p>
-                  </div>
-                </div>
-                <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-slate-800 text-peach-400 border border-peach-500/20">
-                  CS2
-                </span>
-              </div>
-
-              <div class="bg-surface p-3 rounded-xl border border-surfaceborder/60 space-y-1.5 text-xs text-slate-300">
-                <div class="flex justify-between"><span>Ціль:</span> <strong class="text-slate-100">Faceit Lvl 8-10 Grind</strong></div>
-                <div class="flex justify-between"><span>Вимоги:</span> <span class="text-slate-300">Мікрофон, 18+, без тильту</span></div>
-                <div class="flex justify-between"><span>Позиції:</span> <strong class="text-peach-400">Шукаємо 2-го саппорта / Lurker</strong></div>
-              </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-surfaceborder flex items-center justify-between">
-              <span class="text-xs text-slate-400"><i class="fa-solid fa-user-group text-slate-500 mr-1.5"></i> Слотів: <strong>4 / 5</strong></span>
-              <button class="px-4 py-2 rounded-xl text-xs font-bold bg-peach-500 hover:bg-peach-400 text-darkbg transition-colors focus:ring-2 focus:ring-peach-500">
-                Вступити в паті
-              </button>
-            </div>
-          </div>
-
-          <!-- LFG Card 2 -->
-          <div class="bg-surfacecard border border-surfaceborder rounded-2xl p-6 hover:border-violetaccent-500/40 transition-all flex flex-col justify-between">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-xl bg-violetaccent-500/20 text-violetaccent-400 flex items-center justify-center font-bold text-lg border border-violetaccent-500/30">
-                    AK
-                  </div>
-                  <div>
-                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
-                      ApexKai
-                      <span class="w-2 h-2 rounded-full bg-emerald-400" title="В мережі"></span>
-                    </h3>
-                    <p class="text-xs text-slate-400">Лідер лобі &bull; Європа</p>
-                  </div>
-                </div>
-                <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-slate-800 text-violetaccent-400 border border-violetaccent-500/20">
-                  Apex
-                </span>
-              </div>
-
-              <div class="bg-surface p-3 rounded-xl border border-surfaceborder/60 space-y-1.5 text-xs text-slate-300">
-                <div class="flex justify-between"><span>Ціль:</span> <strong class="text-slate-100">Ranked Predator Push</strong></div>
-                <div class="flex justify-between"><span>Вимоги:</span> <span class="text-slate-300">Discord, D4+, IGL досвід</span></div>
-                <div class="flex justify-between"><span>Позиції:</span> <strong class="text-violetaccent-400">Потрібен 1 Fragger (Horizon/Bangalore)</strong></div>
-              </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-surfaceborder flex items-center justify-between">
-              <span class="text-xs text-slate-400"><i class="fa-solid fa-user-group text-slate-500 mr-1.5"></i> Слотів: <strong>2 / 3</strong></span>
-              <button class="px-4 py-2 rounded-xl text-xs font-bold bg-violetaccent-500 hover:bg-violetaccent-400 text-slate-100 transition-colors focus:ring-2 focus:ring-violetaccent-500">
-                Вступити в паті
-              </button>
-            </div>
-          </div>
-
-          <!-- LFG Card 3 -->
-          <div class="bg-surfacecard border border-surfaceborder rounded-2xl p-6 hover:border-sky-500/40 transition-all flex flex-col justify-between">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-lg border border-sky-500/30">
-                    LR
-                  </div>
-                  <div>
-                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
-                      LunaRift
-                      <span class="w-2 h-2 rounded-full bg-emerald-400" title="В мережі"></span>
-                    </h3>
-                    <p class="text-xs text-slate-400">Лідер лобі &bull; Україна</p>
-                  </div>
-                </div>
-                <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-slate-800 text-sky-400 border border-sky-500/20">
-                  Valorant
-                </span>
-              </div>
-
-              <div class="bg-surface p-3 rounded-xl border border-surfaceborder/60 space-y-1.5 text-xs text-slate-300">
-                <div class="flex justify-between"><span>Ціль:</span> <strong class="text-slate-100">Ascendant / Immortal Duo</strong></div>
-                <div class="flex justify-between"><span>Вимоги:</span> <span class="text-slate-300">Командний войс, позитив</span></div>
-                <div class="flex justify-between"><span>Позиції:</span> <strong class="text-sky-400">Шукаємо Controller / Smoker</strong></div>
-              </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-surfaceborder flex items-center justify-between">
-              <span class="text-xs text-slate-400"><i class="fa-solid fa-user-group text-slate-500 mr-1.5"></i> Слотів: <strong>3 / 5</strong></span>
-              <button class="px-4 py-2 rounded-xl text-xs font-bold bg-peach-500 hover:bg-peach-400 text-darkbg transition-colors focus:ring-2 focus:ring-peach-500">
-                Вступити в паті
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         5. MULTIMEDIA & EMBEDDING SECTION (Вбудоване YouTube відео та Google Карта)
-         Вимога ЛР №7: обов'язкове використання <iframe> з title, loading="lazy",
-         семантична ізоляція та адаптивність aspect-video
-         ====================================================================== -->
-    <section id="media" class="py-20 bg-surface/50 border-y border-surfaceborder/60">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        
-        <!-- Заголовок секції -->
-        <div class="text-center max-w-3xl mx-auto space-y-3">
-          <span class="text-xs font-bold uppercase tracking-widest text-peach-400">Мультимедіа та офлайн простір</span>
-          <h2 class="text-3xl sm:text-4xl font-heading font-black text-slate-100">Медіа-екосистема та Кібер-Хаб PEACH</h2>
-          <p class="text-sm sm:text-base text-slate-300">
-            Ознайомтесь з атмосферою наших щотижневих лан-турнірів та завітайте до головного кіберспортивного хабу спільноти у Львові.
-          </p>
-        </div>
-
-        <!-- Сітка з відео та картою -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-
-          <!-- Блок 1: Вбудоване відео (YouTube Iframe з адаптивним класом aspect-video) -->
-          <div class="flex flex-col bg-surfacecard border border-surfaceborder rounded-3xl p-6 shadow-xl">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center gap-2.5">
-                <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
-                <h3 class="font-heading font-bold text-lg text-slate-100">Офіційний трейлер екосистеми</h3>
-              </div>
-              <span class="text-xs px-2.5 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/20 font-semibold">4K 60FPS</span>
-            </div>
-            
-            <p class="text-xs text-slate-400 mb-4">
-              Подивіться, як працює система пошуку тімейтів та які моменти фіксують наші гравці під час змагальних матчів.
-            </p>
-
-            <!-- Семантичний контейнер для відео (aspect-video) -->
-            <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-surfaceborder/80 bg-black/60">
-              <iframe 
-                class="w-full h-full"
-                src="https://www.youtube.com/embed/jfKfPfyJRdk" 
-                title="Офіційний відео-огляд ігрової платформи PEACH" 
-                loading="lazy" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin" 
-                allowfullscreen>
-              </iframe>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-surfaceborder flex items-center justify-between text-xs text-slate-400">
-              <span><i class="fa-solid fa-eye text-slate-500 mr-1"></i> 142 800+ переглядів</span>
-              <span class="text-peach-400"><i class="fa-solid fa-thumbs-up mr-1"></i> 98.4% позитивних відгуків</span>
-            </div>
-          </div>
-
-          <!-- Блок 2: Вбудована інтерактивна Google Maps карта -->
-          <div class="flex flex-col bg-surfacecard border border-surfaceborder rounded-3xl p-6 shadow-xl">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center gap-2.5">
-                <i class="fa-solid fa-location-dot text-peach-500 text-xl"></i>
-                <h3 class="font-heading font-bold text-lg text-slate-100">Кіберспортивний хаб PEACH Львів</h3>
-              </div>
-              <span class="text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">Відкрито 24/7</span>
-            </div>
-
-            <p class="text-xs text-slate-400 mb-4">
-              вул. Степана Бандери, 12, Львів (ННІ Комп'ютерних наук та інформаційних технологій). 50 геймерських станцій 240Hz.
-            </p>
-
-            <!-- Семантичний контейнер для карти Google Maps -->
-            <div class="aspect-video lg:aspect-auto flex-grow w-full rounded-2xl overflow-hidden shadow-2xl border border-surfaceborder/80 bg-surface min-h-[260px]">
-              <iframe 
-                class="w-full h-full border-0"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.181829026418!2d24.012297176887556!3d49.835313431189334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add7c31405b5f%3A0x6b10eb964be73f1a!2z0J3QsNGG0ZbQvtC90LDQu9GM0L3QuNC5INGD0L3RltCy0LXRgNGB0LjRgtC10YIgItCb0YzQstGW0LLRgdGM0LrQsCDQv9C-0LvRltGC0LXRhdC90ZbQutCwIg!5e0!3m2!1suk!2sua!4v1710000000000!5m2!1suk!2sua" 
-                title="Розташування кіберспортивного хабу PEACH у Львові на мапі" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen>
-              </iframe>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-surfaceborder flex items-center justify-between text-xs text-slate-400">
-              <span><i class="fa-solid fa-phone text-slate-500 mr-1"></i> (032) 258-26-74</span>
-              <span class="text-violetaccent-400"><i class="fa-solid fa-route mr-1"></i> Прокласти маршрут</span>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         6. DYNAMIC WIDGET / INFORMER SECTION (Інформер статусу серверів)
-         ====================================================================== -->
-    <section id="servers" class="py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="bg-gradient-to-r from-surfacecard via-surface to-surfacecard border border-surfaceborder rounded-3xl p-8 lg:p-12 shadow-2xl">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            <div class="lg:col-span-5 space-y-4">
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-indicator"></span>
-                Усі сервери працюють стабільно
-              </div>
-              <h2 class="text-3xl font-heading font-black text-slate-100">Live Server Status & Ping</h2>
-              <p class="text-sm text-slate-300 leading-relaxed">
-                Наші ігрові кластери підключені до магістральних інтернет-провайдерів безпосередньо. Обирай найближчу локацію для мінімального Input Lag.
-              </p>
-              <div class="pt-2 flex items-center gap-4 text-xs text-slate-400">
-                <span>Оновлено: <strong>щойно (real-time)</strong></span>
-                <span>&bull;</span>
-                <span>Тікрейт: <strong>128 Tick High-Rate</strong></span>
-              </div>
-            </div>
-
-            <!-- Інформер вузлів -->
-            <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
-              <!-- Server 1 -->
-              <div class="p-4 rounded-xl bg-surface border border-surfaceborder/80 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold text-xs border border-emerald-500/20">
-                    UA
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-bold text-slate-100">Київ (Kyiv-IX)</h3>
-                    <p class="text-[11px] text-slate-400">Пряме з'єднання UA-Core</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-sm font-extrabold text-emerald-400">8 ms</span>
-                  <p class="text-[10px] text-slate-400">Навантаження 42%</p>
-                </div>
-              </div>
-
-              <!-- Server 2 -->
-              <div class="p-4 rounded-xl bg-surface border border-surfaceborder/80 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold text-xs border border-emerald-500/20">
-                    PL
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-bold text-slate-100">Варшава (Warsaw-1)</h3>
-                    <p class="text-[11px] text-slate-400">Центральна Європа</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-sm font-extrabold text-emerald-400">14 ms</span>
-                  <p class="text-[10px] text-slate-400">Навантаження 68%</p>
-                </div>
-              </div>
-
-              <!-- Server 3 -->
-              <div class="p-4 rounded-xl bg-surface border border-surfaceborder/80 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold text-xs border border-emerald-500/20">
-                    DE
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-bold text-slate-100">Франкфурт (DE-CIX)</h3>
-                    <p class="text-[11px] text-slate-400">Турнірний хаб #1</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-sm font-extrabold text-emerald-400">22 ms</span>
-                  <p class="text-[10px] text-slate-400">Навантаження 81%</p>
-                </div>
-              </div>
-
-              <!-- Server 4 -->
-              <div class="p-4 rounded-xl bg-surface border border-surfaceborder/80 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold text-xs border border-emerald-500/20">
-                    SE
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-bold text-slate-100">Стокгольм (Nordic)</h3>
-                    <p class="text-[11px] text-slate-400">Скандинавський вузол</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-sm font-extrabold text-emerald-400">26 ms</span>
-                  <p class="text-[10px] text-slate-400">Навантаження 54%</p>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         7. SOCIAL PROOF & REVIEWS (Відгуки кіберспортсменів та ком'юніті)
-         ====================================================================== -->
-    <section id="reviews" class="py-20 bg-surface/30 border-y border-surfaceborder/50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="text-center max-w-2xl mx-auto mb-16 space-y-2">
-          <span class="text-xs font-bold uppercase tracking-widest text-peach-400">Соціальний доказ</span>
-          <h2 class="text-3xl sm:text-4xl font-heading font-black text-slate-100">Що кажуть гравці про PEACH</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-          <!-- Review 1 -->
-          <div class="p-6 rounded-2xl bg-surfacecard border border-surfaceborder flex flex-col justify-between space-y-4">
-            <div class="space-y-3">
-              <div class="flex text-peach-400 text-sm gap-1">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              </div>
-              <p class="text-sm text-slate-300 italic leading-relaxed">
-                "За 3 дні на PEACH знайшов постійний стак для CS2 Faceit. Жодного неадеквату в войсі, всі налаштовані на перемогу. Підбір за ролями реально працює!"
-              </p>
-            </div>
-            <div class="flex items-center gap-3 pt-4 border-t border-surfaceborder">
-              <div class="w-10 h-10 rounded-full bg-peach-500/20 text-peach-400 font-bold flex items-center justify-center text-sm">
-                MK
-              </div>
-              <div>
-                <p class="text-sm font-bold text-slate-100">Максим "K1ller" К.</p>
-                <p class="text-xs text-slate-400">Faceit Lvl 10 &bull; Львів</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Review 2 -->
-          <div class="p-6 rounded-2xl bg-surfacecard border border-surfaceborder flex flex-col justify-between space-y-4">
-            <div class="space-y-3">
-              <div class="flex text-peach-400 text-sm gap-1">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              </div>
-              <p class="text-sm text-slate-300 italic leading-relaxed">
-                "Аплоад кліпів просто космос. Раніше доводилося завантажувати на YouTube і кидати посилання, тут усе вбудовано прямо у стрічку профілю без стиснення бітрейту."
-              </p>
-            </div>
-            <div class="flex items-center gap-3 pt-4 border-t border-surfaceborder">
-              <div class="w-10 h-10 rounded-full bg-violetaccent-500/20 text-violetaccent-400 font-bold flex items-center justify-center text-sm">
-                ОС
-              </div>
-              <div>
-                <p class="text-sm font-bold text-slate-100">Олена "Valkyrie" С.</p>
-                <p class="text-xs text-slate-400">Apex Master &bull; Київ</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Review 3 -->
-          <div class="p-6 rounded-2xl bg-surfacecard border border-surfaceborder flex flex-col justify-between space-y-4">
-            <div class="space-y-3">
-              <div class="flex text-peach-400 text-sm gap-1">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              </div>
-              <p class="text-sm text-slate-300 italic leading-relaxed">
-                "Був на відкритті хабу у Львові на Бандери. Топове залізо 240Hz, оптичний гігабіт і дуже круте студентське ком'юніті Політехніки. Рекомендую всім!"
-              </p>
-            </div>
-            <div class="flex items-center gap-3 pt-4 border-t border-surfaceborder">
-              <div class="w-10 h-10 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-sm">
-                ДП
-              </div>
-              <div>
-                <p class="text-sm font-bold text-slate-100">Денис "Shadow" П.</p>
-                <p class="text-xs text-slate-400">Студент ПП-24 &bull; Львів</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         8. FAQ ACCORDION SECTION (Часті запитання)
-         ====================================================================== -->
-    <section id="faq" class="py-20">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        
-        <div class="text-center space-y-2">
-          <span class="text-xs font-bold uppercase tracking-widest text-violetaccent-400">Питання та відповіді</span>
-          <h2 class="text-3xl sm:text-4xl font-heading font-black text-slate-100">Часті запитання</h2>
-        </div>
-
-        <div class="space-y-4">
-
-          <!-- FAQ Item 1 -->
-          <div class="faq-item rounded-2xl bg-surfacecard border border-surfaceborder overflow-hidden">
-            <button type="button" class="faq-btn w-full p-5 text-left font-heading font-bold text-base text-slate-100 flex items-center justify-between hover:text-peach-400 transition-colors" aria-expanded="false">
-              <span>Як саме працює алгоритм пошуку тімейтів (LFG)?</span>
-              <i class="fa-solid fa-chevron-down faq-icon transition-transform"></i>
-            </button>
-            <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-surfaceborder/50 pt-3">
-              ШІ-алгоритм аналізує твій ігровий ранг, статистику матчів, вибрані ролі (наприклад, Sniper або Support), бажаний час гри та мову спілкування. Після створення запиту система пропонує лобі з максимальною сумісністю за лічені секунди.
-            </div>
-          </div>
-
-          <!-- FAQ Item 2 -->
-          <div class="faq-item rounded-2xl bg-surfacecard border border-surfaceborder overflow-hidden">
-            <button type="button" class="faq-btn w-full p-5 text-left font-heading font-bold text-base text-slate-100 flex items-center justify-between hover:text-peach-400 transition-colors" aria-expanded="false">
-              <span>Чи є платформа PEACH безкоштовною для студентів?</span>
-              <i class="fa-solid fa-chevron-down faq-icon transition-transform"></i>
-            </button>
-            <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-surfaceborder/50 pt-3">
-              Так, базовий функціонал: пошук тімейтів, перегляд і завантаження кліпів, а також участь у відкритих турнірах повністю безкоштовні для всіх зареєстрованих користувачів.
-            </div>
-          </div>
-
-          <!-- FAQ Item 3 -->
-          <div class="faq-item rounded-2xl bg-surfacecard border border-surfaceborder overflow-hidden">
-            <button type="button" class="faq-btn w-full p-5 text-left font-heading font-bold text-base text-slate-100 flex items-center justify-between hover:text-peach-400 transition-colors" aria-expanded="false">
-              <span>Як потрапити до офлайн кіберспортивного хабу у Львові?</span>
-              <i class="fa-solid fa-chevron-down faq-icon transition-transform"></i>
-            </button>
-            <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-surfaceborder/50 pt-3">
-              Хаб розташований за адресою вул. Степана Бандери, 12 (Львівська політехніка). Вхід відкритий цілодобово. Для відвідування достатньо показати свій верифікований профіль PEACH або студентський квиток.
-            </div>
-          </div>
-
-          <!-- FAQ Item 4 -->
-          <div class="faq-item rounded-2xl bg-surfacecard border border-surfaceborder overflow-hidden">
-            <button type="button" class="faq-btn w-full p-5 text-left font-heading font-bold text-base text-slate-100 flex items-center justify-between hover:text-peach-400 transition-colors" aria-expanded="false">
-              <span>Як працює захист від чітерів та токсичних гравців?</span>
-              <i class="fa-solid fa-chevron-down faq-icon transition-transform"></i>
-            </button>
-            <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-surfaceborder/50 pt-3">
-              Усі акаунти обов'язково прив'язуються до Steam Guard та верифікованого номера телефону. При отриманні скарг на токсичну поведінку або використання нечесного ПЗ лобі автоматично блокується до завершення перевірки модераторами.
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         9. LEAD CAPTURE / РАННІЙ ДОСТУП (Форма з CTA)
-         ====================================================================== -->
-    <section id="contact" class="py-20 bg-gradient-to-b from-surface/50 to-darkbg border-t border-surfaceborder/60">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-        
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-peach-500/10 border border-peach-500/30 text-xs font-bold text-peach-400">
-          <i class="fa-solid fa-star"></i> Отримай бейдж Founder та статус VIP
-        </div>
-
-        <h2 class="text-3xl sm:text-5xl font-heading font-black text-slate-100 max-w-2xl mx-auto">
-          Готовий підняти свій скіл на новий рівень?
-        </h2>
-
-        <p class="text-slate-300 max-w-xl mx-auto text-sm sm:text-base">
-          Залиш свій email або Discord, щоб отримати раннє запрошення на закрите бета-тестування нової версії платформи PEACH.
-        </p>
-
-        <!-- Проста форма захоплення -->
-        <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); alert('Дякуємо! Вашу заявку прийнято в список раннього доступу PEACH.');">
-          <label for="lead-email" class="sr-only">Електронна пошта</label>
-          <input 
-            type="email" 
-            id="lead-email" 
-            required 
-            placeholder="Введіть ваш email..." 
-            class="flex-grow px-5 py-3.5 rounded-xl bg-surfacecard border border-surfaceborder text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-peach-500 text-sm"
-          >
-          <button 
-            type="submit" 
-            class="px-7 py-3.5 rounded-xl font-heading font-bold text-sm bg-peach-500 hover:bg-peach-400 text-darkbg shadow-lg shadow-peach-500/30 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-peach-400"
-          >
-            Приєднатися
+        <!-- Пошук по сайту -->
+        <form class="hidden lg:flex flex-1 max-w-xs items-center relative" role="search" action="#search">
+          <label class="sr-only" for="site-search">Пошук ігор, гравців, тредів і медіа</label>
+          <input id="site-search" name="q" type="search" placeholder="Ігри, гравці, треди та медіа" class="w-full py-1.5 pl-3 pr-8 text-xs bg-cardMuted border border-borderField rounded-lg text-textMain placeholder-placeholderColor focus:outline-none focus:ring-2 focus:ring-accent focus:bg-cardBg transition-all">
+          <button class="absolute right-2.5 text-textMuted hover:text-dark text-xs" type="submit" aria-label="Шукати">
+            <i class="fas fa-search" aria-hidden="true"></i>
           </button>
         </form>
 
-        <p class="text-xs text-slate-500">Без спаму. Тільки корисні оновлення та запрошення в бета-тест.</p>
+        <!-- Кнопки дій праворуч -->
+        <div class="hidden md:flex items-center gap-2 shrink-0">
+          <a class="py-2 px-3 text-xs font-semibold rounded-lg bg-peach border border-dark text-dark hover:bg-peach-hover transition-colors whitespace-nowrap" href="#feedback">+ Створити пост</a>
+          <a class="py-1.5 px-3 text-xs font-medium border border-borderField rounded-full bg-cardBg text-dark hover:border-accent transition-colors flex items-center gap-1.5 whitespace-nowrap" href="#profile">
+            <span class="w-2 h-2 rounded-full bg-green-500 inline-block" aria-hidden="true"></span>
+            <span>NovaFox</span>
+          </a>
+        </div>
 
+        <!-- Кнопка мобільного меню -->
+        <div class="flex items-center gap-2 md:hidden">
+          <a class="py-1.5 px-2.5 text-xs font-semibold rounded-lg bg-peach border border-dark text-dark" href="#feedback">+ Пост</a>
+          <button id="mobileMenuBtn" type="button" class="p-2 text-dark hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded-lg" aria-label="Відкрити меню навігації" aria-expanded="false" aria-controls="mobileMenu">
+            <i id="menuIcon" class="fas fa-bars text-xl" aria-hidden="true"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Мобільне меню -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-borderSubtle bg-cardBg px-4 pt-3 pb-5 transition-all">
+      <nav class="flex flex-col space-y-2 mb-4" aria-label="Мобільна навігація">
+        <a class="py-2 px-3 text-sm font-semibold rounded-lg bg-peach-light text-dark" href="#hero">Головна</a>
+        <a class="py-2 px-3 text-sm font-medium rounded-lg text-textMuted hover:bg-cardMuted hover:text-dark" href="#party-finder">Пошук команди (LFG)</a>
+        <a class="py-2 px-3 text-sm font-medium rounded-lg text-textMuted hover:bg-cardMuted hover:text-dark" href="#benefits">Переваги</a>
+        <a class="py-2 px-3 text-sm font-medium rounded-lg text-textMuted hover:bg-cardMuted hover:text-dark" href="#services">Сервіси</a>
+        <a class="py-2 px-3 text-sm font-medium rounded-lg text-textMuted hover:bg-cardMuted hover:text-dark" href="#multimedia">Медіа & Хаб</a>
+        <a class="py-2 px-3 text-sm font-medium rounded-lg text-textMuted hover:bg-cardMuted hover:text-dark" href="#servers">Статус серверів</a>
+        <a class="py-2 px-3 text-sm font-medium rounded-lg text-textMuted hover:bg-cardMuted hover:text-dark" href="#faq">FAQ</a>
+      </nav>
+
+      <div class="flex flex-col gap-2 pt-2 border-t border-borderSubtle">
+        <a class="w-full py-2.5 text-center text-sm font-semibold rounded-lg bg-peach border border-dark text-dark" href="#feedback">+ Створити пост</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       MAIN CONTENT
+       ====================================================================== -->
+  <main id="main" class="flex-grow">
+
+    <!-- 1. СЕКЦІЯ HERO З ПЕРСОНАЛІЗОВАНОЮ ІГРОВОЮ СТРІЧКОЮ (З ДИЗАЙНУ ЛАБИ 6) -->
+    <section id="hero" class="py-10 md:py-16" aria-labelledby="hero-title">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+
+          <!-- Ліва колонка: Текстова частина Hero -->
+          <div class="flex-1">
+            <span class="inline-block py-0.5 px-3 text-xs font-semibold bg-peach border border-borderSubtle rounded-full text-dark mb-3">
+              Ігрові спільноти, об'єднані разом
+            </span>
+            <h1 id="hero-title" class="font-heading font-bold text-3xl sm:text-4xl lg:text-[2.5rem] leading-tight text-dark my-3">
+              Єдиний простір для ігрових спільнот, кліпів та пошуку тімейтів
+            </h1>
+            <p class="text-textMuted text-base sm:text-lg mb-6 leading-relaxed">
+              Об'єднуйся з тисячами гравців, ділися найкращими ігровими моментами без токсичності та знаходь ідеальну команду в реальному часі.
+            </p>
+
+            <!-- Рядок кнопок дій (CTA Row) -->
+            <div class="flex flex-wrap gap-3 mb-6">
+              <a class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg bg-peach border border-dark text-dark text-sm font-semibold shadow-sm hover:bg-peach-hover active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[44px]" href="#services">
+                <i class="fas fa-gamepad" aria-hidden="true"></i>
+                <span>Досліджувати ігри</span>
+              </a>
+              <a class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg bg-accent border border-accent text-white text-sm font-semibold shadow-sm hover:bg-accent-hover active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-dark transition-all min-h-[44px]" href="#party-finder">
+                <i class="fas fa-user-group" aria-hidden="true"></i>
+                <span>Знайти тімейтів</span>
+              </a>
+              <a class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg bg-cardBg border border-dark text-dark text-sm font-medium hover:bg-cardMuted active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[44px]" href="#feedback">
+                <i class="fas fa-plus" aria-hidden="true"></i>
+                <span>Створити пост</span>
+              </a>
+            </div>
+
+            <!-- Теги переваг -->
+            <ul class="flex flex-wrap gap-2 text-xs">
+              <li class="py-1 px-3 bg-cardBg border border-borderSubtle rounded-full text-textMuted font-medium">Без токсичності</li>
+              <li class="py-1 px-3 bg-cardBg border border-borderSubtle rounded-full text-textMuted font-medium">LFG у реальному часі</li>
+              <li class="py-1 px-3 bg-cardBg border border-borderSubtle rounded-full text-textMuted font-medium">AI-модерація ConvEx</li>
+            </ul>
+          </div>
+
+          <!-- Права колонка: Персоналізована ігрова стрічка (Feed Preview) -->
+          <aside class="w-full lg:w-[500px] shrink-0 bg-cardBg border border-borderSubtle rounded-card overflow-hidden shadow-sm" aria-labelledby="feed-title">
+            <h2 id="feed-title" class="py-2 px-3 bg-cardMuted text-xs text-textMuted font-normal text-center border-b border-borderSubtle">
+              Персоналізована ігрова стрічка
+            </h2>
+
+            <div class="p-3">
+              <div class="flex flex-col sm:flex-row gap-3">
+
+                <!-- Ліва частина стрічки: Вкладки + Картки кліпів -->
+                <div class="flex-[2] min-w-0">
+                  <div class="flex flex-wrap gap-1 mb-2.5 border-b border-borderSubtle pb-1" role="tablist" aria-label="Фільтри стрічки">
+                    <button class="py-1 px-2.5 text-xs font-semibold text-dark border-b-2 border-accent transition-colors" type="button" role="tab" aria-selected="true">Для вас</button>
+                    <button class="py-1 px-2.5 text-xs font-medium text-textMuted border-b-2 border-transparent hover:text-dark transition-colors" type="button" role="tab" aria-selected="false">Підписки</button>
+                    <button class="py-1 px-2.5 text-xs font-medium text-textMuted border-b-2 border-transparent hover:text-dark transition-colors" type="button" role="tab" aria-selected="false">Кліпи</button>
+                    <button class="py-1 px-2.5 text-xs font-medium text-textMuted border-b-2 border-transparent hover:text-dark transition-colors" type="button" role="tab" aria-selected="false">Скріншоти</button>
+                  </div>
+
+                  <!-- Пост 1: Кліп ейс -->
+                  <article class="border border-borderSubtle rounded-lg overflow-hidden mb-2.5 bg-cardBg hover:border-accent transition-colors group">
+                    <img class="w-full h-[90px] object-cover bg-cardMuted" src="assets/images/clip-ace.svg" alt="Кадр із відеокліпу про ейс у фінальному раунді" width="400" height="225" loading="lazy">
+                    <h3 class="p-2 text-xs font-semibold text-dark group-hover:text-accent transition-colors line-clamp-1">
+                      <a href="#post-1">Ейс у фінальному раунді — без зайвих слів</a>
+                    </h3>
+                  </article>
+
+                  <!-- Пост 2: Скріншот секретний шлях -->
+                  <article class="border border-borderSubtle rounded-lg overflow-hidden mb-2.5 bg-cardBg hover:border-accent transition-colors group">
+                    <img class="w-full h-[90px] object-cover bg-cardMuted" src="assets/images/screenshot-hidden-path.svg" alt="Скріншот прихованого шляху в грі" width="400" height="225" loading="lazy">
+                    <h3 class="p-2 text-xs font-semibold text-dark group-hover:text-accent transition-colors line-clamp-1">
+                      <a href="#post-2">Знайдено прихований шлях після 47 спроб</a>
+                    </h3>
+                  </article>
+
+                  <!-- Пост 3: Комбо підтримки -->
+                  <article class="border border-borderSubtle rounded-lg overflow-hidden bg-cardBg hover:border-accent transition-colors group">
+                    <img class="w-full h-[90px] object-cover bg-cardMuted" src="assets/images/clip-support-combo.svg" alt="Кадр із відеокліпу про комбо підтримки" width="400" height="225" loading="lazy">
+                    <h3 class="p-2 text-xs font-semibold text-dark group-hover:text-accent transition-colors line-clamp-1">
+                      <a href="#post-3">Ідеальне комбо підтримки в овертаймі</a>
+                    </h3>
+                  </article>
+                </div>
+
+                <!-- Права колонка прев'ю: Спільноти та треди -->
+                <div class="flex-1 text-xs shrink-0 flex flex-col justify-between">
+                  <section aria-labelledby="communities-title">
+                    <h3 id="communities-title" class="font-semibold text-dark text-xs mb-2">Активні спільноти</h3>
+                    <ul class="space-y-1.5 text-textMuted">
+                      <li><a class="block hover:text-accent transition-colors" href="#c-valorant">Valorant UA</a></li>
+                      <li><a class="block hover:text-accent transition-colors" href="#c-cozy">Затишні геймери</a></li>
+                      <li><a class="block hover:text-accent transition-colors" href="#c-rpg">Дослідники RPG</a></li>
+                      <li><a class="block hover:text-accent transition-colors" href="#c-indie">Інді радар</a></li>
+                    </ul>
+                  </section>
+
+                  <div class="border border-borderSubtle rounded-lg p-2.5 mt-3 bg-cardBg">
+                    <h3 class="font-semibold text-dark text-xs mb-1">Рейтинговий загін · Золото-Платина</h3>
+                    <p class="text-textMuted text-[11px]">Шукаємо ще двох гравців.</p>
+                  </div>
+
+                  <div id="trending" class="border border-borderSubtle rounded-lg p-2.5 mt-2.5 bg-cardBg">
+                    <h3 class="font-semibold text-dark text-xs mb-1">Популярне обговорення</h3>
+                    <p class="text-textMuted text-[11px] leading-tight">У який кооперативний реліз гратимете наступним?</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. СЕКЦІЯ PARTY FINDER / LFG -->
+    <section id="party-finder" class="py-12 md:py-16" aria-labelledby="pf-title">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+        <span class="inline-block py-0.5 px-3 text-xs font-semibold bg-peach border border-borderSubtle rounded-full text-dark mb-2">
+          Пошук команди / LFG
+        </span>
+        <h2 id="pf-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark mb-2">
+          Знайди ідеальну команду в реальному часі
+        </h2>
+        <p class="text-textMuted text-sm md:text-base max-w-3xl mb-6">
+          Фільтруй партнерів за грою, платформою, роллю та стилем гри — і приєднуйся до партії за одну кнопку.
+        </p>
+
+        <!-- Панель віджета Party Finder -->
+        <div class="bg-cardBg border border-borderSubtle rounded-card p-4 md:p-6 shadow-sm">
+          <form class="flex flex-wrap items-end gap-3 md:gap-4 mb-6" action="#party-finder" method="get">
+            <div class="flex-1 min-w-[150px]">
+              <label for="f-game" class="block text-xs font-medium text-textMuted mb-1">Гра</label>
+              <select id="f-game" name="game" class="w-full py-2 px-3 text-xs md:text-sm bg-cardMuted border border-borderField rounded-lg text-textMain focus:bg-cardBg focus:ring-2 focus:ring-accent focus:outline-none">
+                <option>Valorant</option>
+                <option>Counter-Strike 2</option>
+                <option>Dota 2</option>
+                <option>Apex Legends</option>
+              </select>
+            </div>
+
+            <div class="flex-1 min-w-[130px]">
+              <label for="f-platform" class="block text-xs font-medium text-textMuted mb-1">Платформа</label>
+              <select id="f-platform" name="platform" class="w-full py-2 px-3 text-xs md:text-sm bg-cardMuted border border-borderField rounded-lg text-textMain focus:bg-cardBg focus:ring-2 focus:ring-accent focus:outline-none">
+                <option>ПК (PC)</option>
+                <option>Консоль (Console)</option>
+              </select>
+            </div>
+
+            <div class="flex-1 min-w-[130px]">
+              <label for="f-role" class="block text-xs font-medium text-textMuted mb-1">Роль</label>
+              <select id="f-role" name="role" class="w-full py-2 px-3 text-xs md:text-sm bg-cardMuted border border-borderField rounded-lg text-textMain focus:bg-cardBg focus:ring-2 focus:ring-accent focus:outline-none">
+                <option>Підтримка (Support)</option>
+                <option>Штурмовик (DPS)</option>
+                <option>Снайпер (Sniper)</option>
+              </select>
+            </div>
+
+            <div class="flex-1 min-w-[130px]">
+              <label for="f-skill" class="block text-xs font-medium text-textMuted mb-1">Рівень навичок</label>
+              <select id="f-skill" name="skill" class="w-full py-2 px-3 text-xs md:text-sm bg-cardMuted border border-borderField rounded-lg text-textMain focus:bg-cardBg focus:ring-2 focus:ring-accent focus:outline-none">
+                <option>Золото (Gold)</option>
+                <option>Платина (Plat)</option>
+                <option>Діамант (Diamond)</option>
+              </select>
+            </div>
+
+            <div class="flex gap-2 shrink-0">
+              <button class="py-2 px-4 text-xs md:text-sm font-medium border border-dark rounded-lg bg-cardBg text-dark hover:bg-cardMuted transition-colors min-h-[40px]" type="reset">Скинути</button>
+              <button class="py-2 px-5 text-xs md:text-sm font-semibold rounded-lg bg-peach border border-dark text-dark hover:bg-peach-hover transition-colors min-h-[40px]" type="button">Пошук</button>
+            </div>
+          </form>
+
+          <div class="flex justify-between items-center mb-4 pb-2 border-b border-borderSubtle">
+            <h3 class="font-heading font-semibold text-base text-dark">Доступні команди</h3>
+            <span class="text-xs font-medium py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted" role="status">12 знайдено</span>
+          </div>
+
+          <!-- Список карток гравців -->
+          <ul class="space-y-3">
+            <li>
+              <article class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 border border-borderSubtle rounded-lg bg-cardBg hover:border-accent transition-colors" aria-labelledby="p-nova">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-11 h-11 rounded-lg bg-peach flex items-center justify-center font-bold text-dark text-sm shrink-0" aria-hidden="true">NV</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h4 id="p-nova" class="font-heading font-semibold text-sm text-dark">NovaFox</h4>
+                      <span class="text-xs text-textMuted">4.8 <span class="text-peach">★</span> · 128 ігор</span>
+                    </div>
+                    <ul class="flex flex-wrap gap-1.5 mt-1 text-xs">
+                      <li class="py-0.5 px-2 bg-cardMuted border border-borderSubtle rounded text-textMuted">Valorant</li>
+                      <li class="py-0.5 px-2 bg-cardMuted border border-borderSubtle rounded text-textMuted">Support</li>
+                      <li class="py-0.5 px-2 bg-cardMuted border border-borderSubtle rounded text-textMuted">Gold</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between sm:justify-end gap-3 mt-2 sm:mt-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-borderSubtle">
+                  <span class="inline-flex items-center gap-1.5 py-0.5 px-2.5 bg-cardBg border border-borderSubtle rounded-full text-xs font-medium text-green-700">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span>В мережі</span>
+                  </span>
+                  <div class="flex gap-2">
+                    <button class="py-1.5 px-3 text-xs font-semibold rounded-lg bg-peach border border-dark text-dark hover:bg-peach-hover transition-colors" type="button">Приєднатися</button>
+                    <button class="py-1.5 px-3 text-xs font-medium rounded-lg border border-dark bg-cardBg text-dark hover:bg-cardMuted transition-colors" type="button">Запросити</button>
+                  </div>
+                </div>
+              </article>
+            </li>
+
+            <li>
+              <article class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 border border-borderSubtle rounded-lg bg-cardBg hover:border-accent transition-colors" aria-labelledby="p-apex">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-11 h-11 rounded-lg bg-accent text-white flex items-center justify-center font-bold text-sm shrink-0" aria-hidden="true">AK</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h4 id="p-apex" class="font-heading font-semibold text-sm text-dark">ApexKai</h4>
+                      <span class="text-xs text-textMuted">4.6 <span class="text-peach">★</span> · 94 гри</span>
+                    </div>
+                    <ul class="flex flex-wrap gap-1.5 mt-1 text-xs">
+                      <li class="py-0.5 px-2 bg-cardMuted border border-borderSubtle rounded text-textMuted">CS2</li>
+                      <li class="py-0.5 px-2 bg-cardMuted border border-borderSubtle rounded text-textMuted">DPS</li>
+                      <li class="py-0.5 px-2 bg-cardMuted border border-borderSubtle rounded text-textMuted">Plat</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between sm:justify-end gap-3 mt-2 sm:mt-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-borderSubtle">
+                  <span class="inline-flex items-center gap-1.5 py-0.5 px-2.5 bg-cardBg border border-borderSubtle rounded-full text-xs font-medium text-amber-700">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    <span>Відійшов</span>
+                  </span>
+                  <div class="flex gap-2">
+                    <button class="py-1.5 px-3 text-xs font-semibold rounded-lg bg-peach border border-dark text-dark hover:bg-peach-hover transition-colors" type="button">Приєднатися</button>
+                    <button class="py-1.5 px-3 text-xs font-medium rounded-lg border border-dark bg-cardBg text-dark hover:bg-cardMuted transition-colors" type="button">Запросити</button>
+                  </div>
+                </div>
+              </article>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. СЕКЦІЯ ПЕРЕВАГ ПЛАТФОРМИ -->
+    <section id="benefits" class="py-12 md:py-16" aria-labelledby="benefits-title">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+        <span class="inline-block py-0.5 px-3 text-xs font-semibold bg-peach border border-borderSubtle rounded-full text-dark mb-2">
+          Переваги платформи
+        </span>
+        <h2 id="benefits-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark mb-2">
+          Чому геймери обирають нашу платформу
+        </h2>
+        <p class="text-textMuted text-sm md:text-base max-w-3xl mb-8 leading-relaxed">
+          PEACH об'єднує обговорення, медіа та пошук партнерів в одному просторі без фрагментації, зайвого шуму та токсичності.
+        </p>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-8">
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-semibold text-base text-dark mb-2">Спільнота</h3>
+              <p class="text-textMuted text-sm leading-relaxed mb-4">Обговорення навколо конкретних ігор у форматі зручних тредів і коментарів.</p>
+            </div>
+            <ul class="flex flex-wrap gap-1.5 text-xs">
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">Треди</li>
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">Коментарі</li>
+            </ul>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-semibold text-base text-dark mb-2">Візуальний контент</h3>
+              <p class="text-textMuted text-sm leading-relaxed mb-4">Зручний upload відео й скріншотів, великі превʼю та адаптивні картки.</p>
+            </div>
+            <ul class="flex flex-wrap gap-1.5 text-xs">
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">4K Кліпи</li>
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">Скріншоти</li>
+            </ul>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-semibold text-base text-dark mb-2">Швидкий LFG</h3>
+              <p class="text-textMuted text-sm leading-relaxed mb-4">Пошук партнерів по грі за точними тегами ролей, рівня навичок та платформи.</p>
+            </div>
+            <ul class="flex flex-wrap gap-1.5 text-xs">
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">ШІ-пошук</li>
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">Платформи</li>
+            </ul>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-semibold text-base text-dark mb-2">Контекстна репутація</h3>
+              <p class="text-textMuted text-sm leading-relaxed mb-4">Прозора система бейджів і досягнень за реальний внесок у конкретні спільноти.</p>
+            </div>
+            <ul class="flex flex-wrap gap-1.5 text-xs">
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">Бейджі</li>
+              <li class="py-0.5 px-2.5 bg-cardMuted border border-borderSubtle rounded-full text-textMuted">Досягнення</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. СЕКЦІЯ СЕРВІСІВ ПЛАТФОРМИ -->
+    <section id="services" class="py-12 md:py-16" aria-labelledby="services-title">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+        <h2 id="services-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark mb-6">
+          Сервіси платформи
+        </h2>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:border-peach transition-colors">
+            <h3 class="font-heading font-semibold text-base text-dark mb-1.5">Ігрові спільноти</h3>
+            <p class="text-textMuted text-sm">Треди й коментарі навколо конкретних ігор.</p>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:border-peach transition-colors">
+            <h3 class="font-heading font-semibold text-base text-dark mb-1.5">Кліпи та скріншоти</h3>
+            <p class="text-textMuted text-sm">Завантаження медіа з великими якісними превʼю.</p>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:border-peach transition-colors">
+            <h3 class="font-heading font-semibold text-base text-dark mb-1.5">Пошук команди (LFG)</h3>
+            <p class="text-textMuted text-sm">Пошук тімейтів за роллю, рівнем і платформою.</p>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:border-peach transition-colors">
+            <h3 class="font-heading font-semibold text-base text-dark mb-1.5">Репутація</h3>
+            <p class="text-textMuted text-sm">Бейджі та досягнення за внесок у спільноти.</p>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:border-peach transition-colors">
+            <h3 class="font-heading font-semibold text-base text-dark mb-1.5">AI-модерація</h3>
+            <p class="text-textMuted text-sm">Прозоре фільтрування токсичності завдяки ConvEx.</p>
+          </li>
+
+          <li class="bg-cardBg border border-borderSubtle rounded-card p-5 shadow-sm hover:border-peach transition-colors">
+            <h3 class="font-heading font-semibold text-base text-dark mb-1.5">Зворотний зв'язок</h3>
+            <p class="text-textMuted text-sm">Повідомлення про помилки та пропозиції розробникам.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. СЕКЦІЯ МУЛЬТИМЕДІА: YOUTUBE EMBED + GOOGLE MAPS (ЛАБА 7)
+         ====================================================================== -->
+    <section id="multimedia" class="py-12 md:py-16 bg-cardBg border-y border-borderSubtle" aria-labelledby="media-title">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <span class="inline-block py-0.5 px-3 text-xs font-semibold bg-peach border border-borderSubtle rounded-full text-dark mb-2">
+            Мультимедіа та локація
+          </span>
+          <h2 id="media-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark mb-3">
+            Відео-огляд платформи та Львівський хаб
+          </h2>
+          <p class="text-textMuted text-sm md:text-base leading-relaxed">
+            Подивіться офіційний промо-ролик про роботу екосистеми PEACH та відвідайте наш фізичний кіберспортивний простір у Львові.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          
+          <!-- Ліва колонка: Промо-відео (YouTube Embed) -->
+          <div class="bg-pageBg border border-borderSubtle rounded-card p-4 shadow-sm flex flex-col justify-between">
+            <div class="aspect-video w-full rounded-lg overflow-hidden border border-borderSubtle bg-cardMuted mb-4">
+              <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Офіційний відео-огляд ігрової платформи PEACH" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen></iframe>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-heading font-semibold text-base text-dark">Офіційний промо-ролик PEACH</h3>
+                <span class="text-xs font-semibold py-0.5 px-2 bg-peach rounded text-dark">4K 60FPS</span>
+              </div>
+              <p class="text-textMuted text-xs leading-relaxed mb-3">
+                Дізнайтеся, як ШІ-модерація ConvEx фільтрує токсичність і як знайти команду для змагальних матчів за лічені секунди.
+              </p>
+              <div class="flex flex-wrap gap-2 text-[11px] text-textMuted">
+                <span class="py-0.5 px-2 bg-cardBg border border-borderSubtle rounded">Огляд функцій</span>
+                <span class="py-0.5 px-2 bg-cardBg border border-borderSubtle rounded">Звук 5.1</span>
+                <span class="py-0.5 px-2 bg-cardBg border border-borderSubtle rounded">Геймплей</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Права колонка: Інтерактивна мапа Google Maps -->
+          <div class="bg-pageBg border border-borderSubtle rounded-card p-4 shadow-sm flex flex-col justify-between">
+            <div class="aspect-video w-full rounded-lg overflow-hidden border border-borderSubtle bg-cardMuted mb-4">
+              <iframe class="w-full h-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.080789886077!2d24.01210877685651!3d49.835319831741695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add7c31c0c66f%3A0xe9f7c0062a4e21a4!2z0J3QsNGG0ZbQvtC90LDQu9GM0L3QuNC5INGD0L3RltCy0LXRgNGB0LjRgtC10YIgwqvQm9GM0LLRltCy0YHRjNC60LAg0L_QvtC70ZbRgtC10YXQvdGW0LrQsMK7!5e0!3m2!1suk!2sua!4v1715000000000!5m2!1suk!2sua" title="Розташування кіберспортивного хабу PEACH у Львові на мапі" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-heading font-semibold text-base text-dark">Львівський кібер-хаб PEACH</h3>
+                <span class="text-xs font-semibold py-0.5 px-2 bg-accent text-white rounded">Відкрито 24/7</span>
+              </div>
+              <p class="text-textMuted text-xs leading-relaxed mb-3">
+                м. Львів, вул. Степана Бандери, 12 (Головний корпус НУ «Львівська політехніка»). 40 станцій із частотою 240Hz та гігабітним каналом.
+              </p>
+              <div class="flex flex-wrap gap-2 text-[11px] text-textMuted">
+                <span class="py-0.5 px-2 bg-cardBg border border-borderSubtle rounded">Буткемпи</span>
+                <span class="py-0.5 px-2 bg-cardBg border border-borderSubtle rounded">LAN-турніри</span>
+                <span class="py-0.5 px-2 bg-cardBg border border-borderSubtle rounded">Зона відпочинку</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. СЕКЦІЯ СТАТУСУ СЕРВЕРІВ (ЛАБА 7)
+         ====================================================================== -->
+    <section id="servers" class="py-12 md:py-16" aria-labelledby="servers-title">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <span class="inline-block py-0.5 px-3 text-xs font-semibold bg-peach border border-borderSubtle rounded-full text-dark mb-2">
+              Інфраструктура & Мережа
+            </span>
+            <h2 id="servers-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark mb-2">
+              Моніторинг ігрових кластерів PEACH
+            </h2>
+            <p class="text-textMuted text-sm md:text-base">
+              Усі сервери працюють із частотою 128 Tick та захистом від DDoS-атак у реальному часі.
+            </p>
+          </div>
+          <div class="shrink-0 flex items-center gap-2 text-xs font-medium text-green-700 bg-cardBg border border-borderSubtle rounded-lg py-1.5 px-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+            <span>Усі системи в нормі (100% Uptime)</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <div class="bg-cardBg border border-borderSubtle rounded-card p-4 shadow-sm hover:border-accent transition-colors">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-dark flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span> UA-KYIV-01
+              </span>
+              <span class="text-xs font-mono font-semibold text-green-600">8 ms</span>
+            </div>
+            <p class="text-textMuted text-xs mb-3">Київський магістральний вузол</p>
+            <div class="w-full bg-cardMuted rounded-full h-1.5 mb-2 overflow-hidden">
+              <div class="bg-green-500 h-1.5 rounded-full" style="width: 42%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-textMuted">
+              <span>Навантаження: 42%</span>
+              <span class="font-semibold text-dark">128 Tick</span>
+            </div>
+          </div>
+
+          <div class="bg-cardBg border border-borderSubtle rounded-card p-4 shadow-sm hover:border-accent transition-colors">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-dark flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span> PL-WARSAW-02
+              </span>
+              <span class="text-xs font-mono font-semibold text-green-600">14 ms</span>
+            </div>
+            <p class="text-textMuted text-xs mb-3">Варшавський хаб зв'язку</p>
+            <div class="w-full bg-cardMuted rounded-full h-1.5 mb-2 overflow-hidden">
+              <div class="bg-green-500 h-1.5 rounded-full" style="width: 68%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-textMuted">
+              <span>Навантаження: 68%</span>
+              <span class="font-semibold text-dark">128 Tick</span>
+            </div>
+          </div>
+
+          <div class="bg-cardBg border border-borderSubtle rounded-card p-4 shadow-sm hover:border-accent transition-colors">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-dark flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span> DE-FRANKFURT-01
+              </span>
+              <span class="text-xs font-mono font-semibold text-green-600">22 ms</span>
+            </div>
+            <p class="text-textMuted text-xs mb-3">Європейський центральний вузол</p>
+            <div class="w-full bg-cardMuted rounded-full h-1.5 mb-2 overflow-hidden">
+              <div class="bg-amber-500 h-1.5 rounded-full" style="width: 76%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-textMuted">
+              <span>Навантаження: 76%</span>
+              <span class="font-semibold text-dark">128 Tick</span>
+            </div>
+          </div>
+
+          <div class="bg-cardBg border border-borderSubtle rounded-card p-4 shadow-sm hover:border-accent transition-colors">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-dark flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span> SE-STOCKHOLM-03
+              </span>
+              <span class="text-xs font-mono font-semibold text-green-600">26 ms</span>
+            </div>
+            <p class="text-textMuted text-xs mb-3">Скандинавський кластер</p>
+            <div class="w-full bg-cardMuted rounded-full h-1.5 mb-2 overflow-hidden">
+              <div class="bg-green-500 h-1.5 rounded-full" style="width: 38%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-textMuted">
+              <span>Навантаження: 38%</span>
+              <span class="font-semibold text-dark">128 Tick</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. СЕКЦІЯ ВІДГУКІВ ТА ДОВІРИ СПІЛЬНОТИ -->
+    <section id="trust" class="py-12 md:py-16 bg-cardBg border-y border-borderSubtle" aria-labelledby="trust-title">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+          <div class="flex-1 lg:max-w-md">
+            <span class="inline-block py-0.5 px-3 text-xs font-semibold bg-peach border border-borderSubtle rounded-full text-dark mb-2">
+              Спільнота & Відгуки
+            </span>
+            <h2 id="trust-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark mb-3">
+              Будуємо безпечну спільноту разом з вами
+            </h2>
+            <p class="text-textMuted text-sm md:text-base leading-relaxed">
+              Цитати гравців та авторів контенту про прозорість AI-модерації (ConvEx), відсутність токсичності та зручність публікації кліпів.
+            </p>
+          </div>
+
+          <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+            <figure class="p-4 border border-borderSubtle rounded-card bg-pageBg">
+              <blockquote class="text-xs md:text-sm text-textMuted mb-2">«ConvEx прозоро показує, що і як відфільтровується.»</blockquote>
+              <figcaption class="text-xs font-semibold text-dark flex items-center justify-between">
+                <span>Олег "ClipMaster"</span>
+                <span class="text-peach text-sm" role="img" aria-label="Оцінка 5 з 5">★★★★★</span>
+              </figcaption>
+            </figure>
+
+            <figure class="p-4 border border-borderSubtle rounded-card bg-pageBg">
+              <blockquote class="text-xs md:text-sm text-textMuted mb-2">«Помітила, що стало значно менше хамства.»</blockquote>
+              <figcaption class="text-xs font-semibold text-dark flex items-center justify-between">
+                <span>Ірина "NoMoreToxic"</span>
+                <span class="text-peach text-sm" role="img" aria-label="Оцінка 5 з 5">★★★★★</span>
+              </figcaption>
+            </figure>
+
+            <figure class="p-4 border border-borderSubtle rounded-card bg-pageBg">
+              <blockquote class="text-xs md:text-sm text-textMuted mb-2">«Зручно, що є простий механізм зворотного зв'язку.»</blockquote>
+              <figcaption class="text-xs font-semibold text-dark flex items-center justify-between">
+                <span>Макс "Spectator"</span>
+                <span class="text-peach text-sm" role="img" aria-label="Оцінка 5 з 5">★★★★★</span>
+              </figcaption>
+            </figure>
+
+            <figure class="p-4 border border-borderSubtle rounded-card bg-pageBg">
+              <blockquote class="text-xs md:text-sm text-textMuted mb-2">«Рівень коментарів та реакцій значно якісніший.»</blockquote>
+              <figcaption class="text-xs font-semibold text-dark flex items-center justify-between">
+                <span>Антон "CommunityFirst"</span>
+                <span class="text-peach text-sm" role="img" aria-label="Оцінка 5 з 5">★★★★★</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         8. СЕКЦІЯ FAQ АКОРДЕОН (ЛАБА 7)
+         ====================================================================== -->
+    <section id="faq" class="py-12 md:py-16" aria-labelledby="faq-title">
+      <div class="max-w-[800px] mx-auto px-4 md:px-5">
+        <div class="text-center mb-10">
+          <span class="inline-block py-0.5 px-3 text-xs font-semibold bg-peach border border-borderSubtle rounded-full text-dark mb-2">
+            Питання та відповіді
+          </span>
+          <h2 id="faq-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark mb-2">
+            Часті запитання (FAQ)
+          </h2>
+          <p class="text-textMuted text-sm md:text-base">
+            Дізнайтеся більше про правила спільноти, ШІ-модерацію та участь у турнірах.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          
+          <div class="border border-borderSubtle rounded-card bg-cardBg overflow-hidden">
+            <button type="button" class="faq-btn w-full p-4 text-left font-semibold text-dark text-sm md:text-base flex justify-between items-center hover:text-accent transition-colors" aria-expanded="false">
+              <span>Як працює ШІ-модерація ConvEx проти токсичності?</span>
+              <i class="fas fa-chevron-down text-textMuted transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden p-4 pt-0 text-xs md:text-sm text-textMuted leading-relaxed border-t border-borderSubtle bg-pageBg">
+              Система ConvEx аналізує контекст повідомлень у реальному часі, розпізнає приховані образи та автоматично попереджає гравця або обмежує доступ до чату без ручного втручання модераторів.
+            </div>
+          </div>
+
+          <div class="border border-borderSubtle rounded-card bg-cardBg overflow-hidden">
+            <button type="button" class="faq-btn w-full p-4 text-left font-semibold text-dark text-sm md:text-base flex justify-between items-center hover:text-accent transition-colors" aria-expanded="false">
+              <span>Чи безкоштовний функціонал пошуку тімейтів (LFG)?</span>
+              <i class="fas fa-chevron-down text-textMuted transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden p-4 pt-0 text-xs md:text-sm text-textMuted leading-relaxed border-t border-borderSubtle bg-pageBg">
+              Так, базовий пошук тімейтів, створення лобі та приєднання до відкритих загонів повністю безкоштовні для всіх верифікованих користувачів платформи PEACH.
+            </div>
+          </div>
+
+          <div class="border border-borderSubtle rounded-card bg-cardBg overflow-hidden">
+            <button type="button" class="faq-btn w-full p-4 text-left font-semibold text-dark text-sm md:text-base flex justify-between items-center hover:text-accent transition-colors" aria-expanded="false">
+              <span>Як відвідати фізичний кібер-хаб у Львові?</span>
+              <i class="fas fa-chevron-down text-textMuted transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden p-4 pt-0 text-xs md:text-sm text-textMuted leading-relaxed border-t border-borderSubtle bg-pageBg">
+              Хаб розташований за адресою вул. Степана Бандери, 12 (головний корпус НУ «Львівська політехніка»). Ви можете забронювати станцію заздалегідь через платформу або прийти в будь-який час (працюємо цілодобово 24/7).
+            </div>
+          </div>
+
+          <div class="border border-borderSubtle rounded-card bg-cardBg overflow-hidden">
+            <button type="button" class="faq-btn w-full p-4 text-left font-semibold text-dark text-sm md:text-base flex justify-between items-center hover:text-accent transition-colors" aria-expanded="false">
+              <span>Які формати відео підтримуються для завантаження кліпів?</span>
+              <i class="fas fa-chevron-down text-textMuted transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden p-4 pt-0 text-xs md:text-sm text-textMuted leading-relaxed border-t border-borderSubtle bg-pageBg">
+              Платформа підтримує завантаження файлів MP4, WebM та MOV тривалістю до 2 хвилин із роздільною здатністю до 4K (3840×2160) при 60 кадрах на секунду без компресії звуку.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. СЕКЦІЯ ФОРМИ ЗВОРОТНОГО ЗВ'ЯЗКУ -->
+    <section id="feedback" class="py-12 md:py-16 bg-cardBg border-t border-borderSubtle" aria-labelledby="feedback-title">
+      <div class="max-w-[700px] mx-auto px-4 md:px-5">
+        <h2 id="feedback-title" class="font-heading font-semibold text-2xl md:text-3xl text-dark text-center mb-2">
+          Зворотний зв'язок та реєстрація
+        </h2>
+        <p class="text-textMuted text-sm text-center mb-6">
+          Маєте запитання або пропозицію щодо турнірів? Надішліть нам повідомлення.
+        </p>
+
+        <form action="#feedback" method="post" class="bg-pageBg border border-borderSubtle rounded-card p-5 md:p-8 shadow-sm">
+          <div class="space-y-4">
+            <div>
+              <label for="fb-email" class="block text-xs font-semibold text-dark mb-1">
+                Email <span class="text-accent" aria-hidden="true">*</span>
+              </label>
+              <input id="fb-email" name="email" type="email" placeholder="name@example.com" required class="w-full py-2 px-3 text-sm bg-cardBg border border-borderField rounded-lg text-textMain placeholder-placeholderColor focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+            </div>
+
+            <div>
+              <label for="fb-category" class="block text-xs font-semibold text-dark mb-1">
+                Категорія звернення <span class="text-accent" aria-hidden="true">*</span>
+              </label>
+              <select id="fb-category" name="category" required class="w-full py-2 px-3 text-sm bg-cardBg border border-borderField rounded-lg text-textMain focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+                <option value="">Оберіть тип звернення</option>
+                <option>Бронювання місця в хабі</option>
+                <option>Реєстрація на турнір</option>
+                <option>Пропозиція покращення</option>
+                <option>Технічна підтримка</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="fb-message" class="block text-xs font-semibold text-dark mb-1">
+                Повідомлення <span class="text-accent" aria-hidden="true">*</span>
+              </label>
+              <textarea id="fb-message" name="message" rows="3" required placeholder="Опишіть ваше питання або деталі команди..." class="w-full py-2 px-3 text-sm bg-cardBg border border-borderField rounded-lg text-textMain placeholder-placeholderColor focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"></textarea>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row justify-center gap-3 mt-6 pt-4 border-t border-borderSubtle">
+            <button class="py-2 px-5 text-sm font-medium border border-dark rounded-lg bg-cardBg text-dark hover:bg-cardMuted transition-colors min-h-[44px]" type="reset">
+              Очистити
+            </button>
+            <button class="py-2 px-6 text-sm font-semibold rounded-lg bg-dark text-white hover:bg-black transition-colors min-h-[44px]" type="submit">
+              Надіслати повідомлення
+            </button>
+          </div>
+        </form>
       </div>
     </section>
 
   </main>
 
   <!-- ======================================================================
-       10. FOOTER / ПІДВАЛ (4-колонковий адаптивний підвал сайту)
+       FOOTER / ПІДВАЛ САЙТУ
        ====================================================================== -->
-  <footer class="bg-surface border-t border-surfaceborder/80 pt-16 pb-12 text-slate-400 text-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-        
-        <!-- Колонка 1: Бренд та опис -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-peach-500 to-violetaccent-500 p-0.5">
-              <div class="w-full h-full bg-darkbg rounded-[6px] flex items-center justify-center">
-                <i class="fa-solid fa-gamepad text-peach-500 text-sm"></i>
-              </div>
-            </div>
-            <span class="font-heading font-extrabold text-xl text-slate-100">PEACH<span class="text-peach-500">.</span>GG</span>
-          </div>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Єдина геймінг-екосистема нового покоління: розумний LFG матчмейкінг, кіберспортивні хаби та високоякісний відео-контент без токсичності.
-          </p>
-          <div class="flex items-center gap-3 pt-2">
-            <a href="https://discord.com" target="_blank" class="w-9 h-9 rounded-lg bg-surfacecard border border-surfaceborder flex items-center justify-center text-slate-300 hover:text-peach-400 hover:border-peach-500/40 transition-colors" aria-label="Discord">
-              <i class="fa-brands fa-discord"></i>
-            </a>
-            <a href="https://telegram.org" target="_blank" class="w-9 h-9 rounded-lg bg-surfacecard border border-surfaceborder flex items-center justify-center text-slate-300 hover:text-peach-400 hover:border-peach-500/40 transition-colors" aria-label="Telegram">
-              <i class="fa-brands fa-telegram"></i>
-            </a>
-            <a href="https://youtube.com" target="_blank" class="w-9 h-9 rounded-lg bg-surfacecard border border-surfaceborder flex items-center justify-center text-slate-300 hover:text-peach-400 hover:border-peach-500/40 transition-colors" aria-label="YouTube">
-              <i class="fa-brands fa-youtube"></i>
-            </a>
-            <a href="https://github.com" target="_blank" class="w-9 h-9 rounded-lg bg-surfacecard border border-surfaceborder flex items-center justify-center text-slate-300 hover:text-peach-400 hover:border-peach-500/40 transition-colors" aria-label="GitHub">
-              <i class="fa-brands fa-github"></i>
-            </a>
-          </div>
+  <footer class="bg-cardBg border-t border-borderSubtle py-8 text-textMuted">
+    <div class="max-w-[1200px] mx-auto px-4 md:px-5">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 border-b border-borderSubtle">
+
+        <div class="flex items-center gap-2">
+          <img src="assets/icons/logo.svg" alt="" width="24" height="24" class="w-6 h-6">
+          <span class="font-heading font-bold text-lg text-dark">PEACH</span>
+          <span class="text-xs text-textMuted hidden sm:inline">· Платформа ігрових спільнот</span>
         </div>
 
-        <!-- Колонка 2: Навігація продукту -->
-        <div class="space-y-3">
-          <h4 class="font-heading font-bold text-slate-100 text-sm uppercase tracking-wider">Екосистема</h4>
-          <ul class="space-y-2 text-xs">
-            <li><a href="#features" class="hover:text-peach-400 transition-colors">Переваги платформи</a></li>
-            <li><a href="#lfg" class="hover:text-peach-400 transition-colors">Party Finder (Пошук лобі)</a></li>
-            <li><a href="#media" class="hover:text-peach-400 transition-colors">Мультимедіа та кліпи</a></li>
-            <li><a href="#servers" class="hover:text-peach-400 transition-colors">Моніторинг серверів</a></li>
-            <li><a href="#reviews" class="hover:text-peach-400 transition-colors">Відгуки ком'юніті</a></li>
+        <nav aria-label="Додаткова навігація у підвалі">
+          <ul class="flex flex-wrap items-center justify-center gap-4 text-xs md:text-sm">
+            <li><a class="hover:text-dark transition-colors" href="#hero">Головна</a></li>
+            <li><a class="hover:text-dark transition-colors" href="#party-finder">LFG</a></li>
+            <li><a class="hover:text-dark transition-colors" href="#multimedia">Хаб</a></li>
+            <li><a class="hover:text-dark transition-colors" href="#servers">Сервери</a></li>
+            <li><a class="hover:text-dark transition-colors" href="#faq">FAQ</a></li>
           </ul>
-        </div>
+        </nav>
 
-        <!-- Колонка 3: Ком'юніті та локація -->
-        <div class="space-y-3">
-          <h4 class="font-heading font-bold text-slate-100 text-sm uppercase tracking-wider">Хаб у Львові</h4>
-          <ul class="space-y-2 text-xs">
-            <li><span class="text-slate-300">вул. Степана Бандери, 12</span></li>
-            <li><span class="text-slate-400">Національний університет "Львівська політехніка"</span></li>
-            <li><span class="text-slate-400">Графік: Цілодобово (24/7)</span></li>
-            <li><span class="text-peach-400 font-semibold">Гаряча лінія: (032) 258-26-74</span></li>
-            <li><a href="mailto:support@peach.gg" class="hover:text-peach-400 transition-colors">support@peach.gg</a></li>
-          </ul>
-        </div>
-
-        <!-- Колонка 4: Статус та розробник -->
-        <div class="space-y-3">
-          <h4 class="font-heading font-bold text-slate-100 text-sm uppercase tracking-wider">Інформація</h4>
-          <div class="p-3.5 rounded-xl bg-surfacecard border border-surfaceborder space-y-2 text-xs">
-            <div class="flex items-center gap-2 text-emerald-400 font-semibold">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              All Systems Operational
-            </div>
-            <p class="text-slate-400 text-[11px]">
-              Лабораторна робота №7 з дисципліни «Технології веброзробки та дизайну».
-            </p>
-            <p class="text-slate-300 text-[11px] font-bold">
-              Розробник: Сало Дмитро, група ПП-24
-            </p>
-          </div>
+        <div class="flex items-center gap-3 text-textMuted text-base">
+          <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" aria-label="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
         </div>
 
       </div>
 
-      <!-- Нижня смуга копірайту -->
-      <div class="pt-8 border-t border-surfaceborder/60 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-        <p>&copy; 2026 PEACH Gaming Ecosystem. Усі права захищено. Кафедра САПР, НУ "ЛП".</p>
-        <div class="flex gap-6">
-          <a href="#" class="hover:text-slate-400 transition-colors">Політика конфіденційності</a>
-          <a href="#" class="hover:text-slate-400 transition-colors">Правила спільноти</a>
-          <a href="#" class="hover:text-slate-400 transition-colors">Умови використання</a>
-        </div>
+      <div class="pt-4 text-center text-xs">
+        <p><small>&copy; 2026 PEACH. Усі права захищено. Студент групи ПП-24 Сало Дмитро, Кафедра САПР НУ "Львівська політехніка".</small></p>
       </div>
     </div>
   </footer>
 
-  <!-- Скрипт для мобільного меню та акордеону FAQ -->
+  <!-- Інтерактивність: мобільне меню та FAQ акордеон -->
   <script>
     // Мобільне меню
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const iconOpen = document.getElementById('menu-icon-open');
-    const iconClose = document.getElementById('menu-icon-close');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
 
-    if (menuBtn && mobileMenu) {
-      menuBtn.addEventListener('click', () => {
-        const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
-        menuBtn.setAttribute('aria-expanded', !isExpanded);
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
         mobileMenu.classList.toggle('hidden');
-        iconOpen.classList.toggle('hidden');
-        iconClose.classList.toggle('hidden');
-      });
 
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.add('hidden');
-          iconOpen.classList.remove('hidden');
-          iconClose.classList.add('hidden');
-          menuBtn.setAttribute('aria-expanded', 'false');
-        });
+        if (!isExpanded) {
+          menuIcon.classList.remove('fa-bars');
+          menuIcon.classList.add('fa-xmark');
+        } else {
+          menuIcon.classList.remove('fa-xmark');
+          menuIcon.classList.add('fa-bars');
+        }
       });
     }
 
-    // FAQ Акордеон
-    const faqBtns = document.querySelectorAll('.faq-btn');
-    faqBtns.forEach(btn => {
+    // FAQ Accordion
+    document.querySelectorAll('.faq-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const answer = btn.nextElementSibling;
-        const icon = btn.querySelector('.faq-icon');
-        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('.fa-chevron-down');
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
 
-        // Закрити інші
-        faqBtns.forEach(otherBtn => {
+        // Закриваємо інші пункти
+        document.querySelectorAll('.faq-btn').forEach(otherBtn => {
           if (otherBtn !== btn) {
             otherBtn.setAttribute('aria-expanded', 'false');
             otherBtn.nextElementSibling.classList.add('hidden');
-            const otherIcon = otherBtn.querySelector('.faq-icon');
+            const otherIcon = otherBtn.querySelector('.fa-chevron-down');
             if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
           }
         });
 
-        // Перемкнути поточний
-        btn.setAttribute('aria-expanded', !isOpen);
-        if (!isOpen) {
-          answer.classList.remove('hidden');
-          if (icon) icon.style.transform = 'rotate(180deg)';
-        } else {
-          answer.classList.add('hidden');
-          if (icon) icon.style.transform = 'rotate(0deg)';
+        // Перемикаємо поточний
+        btn.setAttribute('aria-expanded', !isExpanded);
+        content.classList.toggle('hidden');
+        if (icon) {
+          icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
         }
       });
     });
